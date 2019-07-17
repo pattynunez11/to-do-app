@@ -1,0 +1,18 @@
+
+body {
+  text-align: center;
+  width: 80%;
+}
+#addToDoForm{
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+li {
+    text-align: left;   
+}
+
+#toDoList{
+    background-color: whitesmoke;
+}
