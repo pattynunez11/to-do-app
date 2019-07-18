@@ -17,6 +17,7 @@ function onReady() {
             complete:false 
         });
         newToDoText.value = '';
+        console.log(toDos);
   renderTheUI();
 
 //clear the input text after pushed
@@ -41,7 +42,6 @@ function renderTheUI() {
       deleteButton.onclick = () => {
          toDoList.removeChild(newLi);
          }
-              
  //addClass
       newLi.className = "mdl-list__item";
       deleteButton.className = "mdl-button mdl-js-button mdl-button--accent";
