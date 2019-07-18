@@ -1,42 +1,55 @@
 window.onload = function() {
     onReady();
-};
-//select DOM Elements with id
-function onReady() {
-    const addToDoForm = document.getElementById('addToDoForm');
-    const newToDoText = document.getElementById('newToDoText');
+}
+
+function onReady() { 
+//Adding Initial State
+    const toDos = [];
+    const addToDoForm = document.getElementById('addToDoForm');      
+//creating New To Do Function
+    function createNewToDo() {
+        const newToDoText = document.getElementById('newToDoText');
+//falsy so that it doesnt allow empty todos
+        if (!newToDoText.value) { return; }
+//declare using object literal notation what each object will be
+        toDos.push( {
+            title: newToDoText.value,
+            complete:false 
+        });
+        newToDoText.value = '';
+  renderTheUI();
+
+//clear the input text after pushed
+        newToDoText.value = ''; 
+    }
+
+//-->UserInterfaceInteraction--------
+
+function renderTheUI() {
     const toDoList = document.getElementById('toDoList');
-//add event listener
-    addToDoForm.addEventListener('submit', () => {
-       event.preventDefault(); 
-       //get the text input
-       let title = newToDoText.value;
-       //create a new li
-       let newLi = document.createElement('li');
-       newLi.className = "mdl-list__item";
-       // create a new input
-       let checkbox = document.createElement('input');
-       //set the input's type to checkbox
-       checkbox.type = "checkbox";
-       checkbox.className = "mdl-checkbox__input" 
-       checkbox.id = "list-checkbox-1"
-       // add a delete button
-       let deleteButton = document.createElement('button');
-       //add text to the button
-       deleteButton.innerHTML = 'delete';
-       deleteButton.className = "mdl-button mdl-js-button mdl-button--accent";
-       //set the title
-       newLi.textContent = title;
-       //attach the checkbox and delete button to the li
-       newLi.appendChild(checkbox);
-       newLi.appendChild(deleteButton);
-       //onclick remove li
-       deleteButton.onclick = () => {
-        toDoList.removeChild(newLi);
-       }
-       //attach the li to the ul
-       toDoList.appendChild(newLi);
-       //remove after submit empty input
-       newToDoText.value = '';
+    toDoList.textContent = '';
+    toDos.forEach(function(toDo) {
+      const newLi = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
+      let deleteButton = document.createElement('button');
+      deleteButton.innerHTML = 'delete';
+      newLi.textContent = toDo.title;
+      toDoList.appendChild(newLi);
+      newLi.appendChild(checkbox);
+      newLi.appendChild(deleteButton);
+      deleteButton.onclick = () => {
+         toDoList.removeChild(newLi);
+         }
+              
+ //addClass
+      newLi.className = "mdl-list__item";
+      deleteButton.className = "mdl-button mdl-js-button mdl-button--accent";
     });
+    }
+   //add event listener
+   addToDoForm.addEventListener('submit', event => {
+    event.preventDefault();
+    createNewToDo();
+}); 
 }
