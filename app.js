@@ -2,9 +2,10 @@ window.onload = function() {
     onReady();
 }
 
-function onReady() { 
+function onReady() {
+    let id = 0; //counter variable?
 //Adding Initial State
-    const toDos = [];
+    let toDos = [];
     const addToDoForm = document.getElementById('addToDoForm');      
 //creating New To Do Function
     function createNewToDo() {
@@ -14,11 +15,12 @@ function onReady() {
 //declare using object literal notation what each object will be
         toDos.push( {
             title: newToDoText.value,
-            complete:false 
+            complete: false,
+            id: id //added Key
         });
+        id++ //feature
         newToDoText.value = '';
-        console.log(toDos);
-  renderTheUI();
+    renderTheUI();
 
 //clear the input text after pushed
         newToDoText.value = ''; 
@@ -39,9 +41,11 @@ function renderTheUI() {
       toDoList.appendChild(newLi);
       newLi.appendChild(checkbox);
       newLi.appendChild(deleteButton);
+      console.log(toDos);
       deleteButton.onclick = () => {
-         toDoList.removeChild(newLi);
-         }
+         toDos = toDos.filter((item) => item.id !== toDo.id)
+        renderTheUI();
+        }
  //addClass
       newLi.className = "mdl-list__item";
       deleteButton.className = "mdl-button mdl-js-button mdl-button--accent";
